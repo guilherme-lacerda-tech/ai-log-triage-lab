@@ -1,0 +1,9 @@
+[project]
+name = "ai-log-triage-lab"
+version = "0.1.0"
+description = "Synthetic log triage lab with structured output and future LLM integration."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
