@@ -1,0 +1,3 @@
+{"log_id": "LOG-001", "message": "Synthetic heartbeat delayed for lab gateway", "level": "warning"}
+{"log_id": "LOG-002", "message": "Synthetic authentication failure in demo connector", "level": "error"}
+{"log_id": "LOG-003", "message": "Synthetic report completed successfully", "level": "info"}
