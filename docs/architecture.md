@@ -1,30 +1,19 @@
-    # Architecture
+# Architecture
 
-    ## Design Goal
+## Design Goal
 
-    Build a safe AI-ready log triage lab using synthetic logs and structured output.
+Build an AI-ready log triage lab by first creating a deterministic, explainable baseline on synthetic logs.
 
-    ## Current Boundaries
+## Flow
 
-    - Standard library first.
-    - Synthetic input only.
-    - Generated output ignored by Git.
-    - No real systems, endpoints or credentials.
+```mermaid
+flowchart LR
+    Logs["Synthetic JSONL logs"] --> Parser["LogEntry loader"]
+    Parser --> Baseline["Rule baseline"]
+    Baseline --> Result["TriageResult"]
+    Result --> Eval["Labeled dataset evaluation"]
+```
 
-    ## Decisions
+## Future LLM Comparison
 
-    - Start with deterministic baseline.
-- Add LLM only as optional product functionality.
-- Never use real logs.
-
-    ## Future Layers
-
-    ```mermaid
-    flowchart TB
-        A["Mock inputs"] --> B["Collector / Loader"]
-        B --> C["Domain validation"]
-        C --> D["Rules / Processing"]
-        D --> E["Persistence"]
-        E --> F["API / Reporting"]
-        F --> G["Automation workflows"]
-    ```
+The deterministic baseline is the first comparison target. A future LLM or Ollama implementation should be evaluated against the same labeled dataset instead of replacing the baseline without evidence.

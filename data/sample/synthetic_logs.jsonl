@@ -1,3 +1,5 @@
-{"log_id": "LOG-001", "message": "Synthetic heartbeat delayed for lab gateway", "level": "warning"}
-{"log_id": "LOG-002", "message": "Synthetic authentication failure in demo connector", "level": "error"}
-{"log_id": "LOG-003", "message": "Synthetic report completed successfully", "level": "info"}
+{"log_id": "LOG-001", "message": "Synthetic heartbeat delayed for lab gateway queue", "level": "warning", "expected_category": "operational_delay", "expected_severity": "medium"}
+{"log_id": "LOG-002", "message": "Synthetic authentication failure in demo connector", "level": "error", "expected_category": "access_or_integration", "expected_severity": "high"}
+{"log_id": "LOG-003", "message": "Synthetic report completed successfully", "level": "info", "expected_category": "informational", "expected_severity": "low"}
+{"log_id": "LOG-004", "message": "Synthetic database load failed for ETL batch", "level": "error", "expected_category": "data_pipeline", "expected_severity": "high"}
+{"log_id": "LOG-005", "message": "Synthetic service health timeout", "level": "warning", "expected_category": "system_health", "expected_severity": "medium"}

@@ -1,78 +1,64 @@
-    # AI Log Triage Lab
+# AI Log Triage Lab
 
-    Independent public portfolio project for **Python**, **automation**,
-    **systems integration** and **solutions engineering**.
+Independent public portfolio project for **Python**, **deterministic classification**, **structured outputs** and future **LLM comparison**.
 
-    This repository was created from scratch with a fictional domain and
-    synthetic data. It does not contain corporate code, real data, private
-    endpoints, credentials, logs or proprietary rules.
+This repository was created from scratch with synthetic logs. It does not contain corporate code, real data, private endpoints, credentials, logs or proprietary rules.
 
-    ## Problem
+## Problem
 
-    Operational logs need classification, summaries and explainable suggested actions without exposing real logs.
+Operational logs need triage into categories, severity and suggested actions. Before adding LLMs, the project needs a measurable baseline.
 
-    ## Objective
+## What It Demonstrates
 
-    Build a safe AI-ready log triage lab using synthetic logs and structured output.
+- `LogEntry` input model.
+- `TriageResult` structured output.
+- `Severity`, `Category` and `SuggestedAction` enums.
+- Deterministic rule baseline.
+- Synthetic labeled dataset.
+- Basic evaluation with labeled cases, correct cases and accuracy.
 
-    ## Current Features
+## Architecture
 
-    - Synthetic JSONL logs.
-- Deterministic triage baseline.
-- Structured JSON output.
-- Explanations and suggested actions.
+```mermaid
+flowchart LR
+    A["Synthetic logs"] --> B["Rule baseline"]
+    B --> C["Structured triage"]
+    C --> D["Evaluation"]
+    B --> E["Future LLM comparison"]
+```
 
-    ## Architecture
+See [docs/architecture.md](docs/architecture.md) for details.
 
-    ```mermaid
-    flowchart LR
-        A["Synthetic input"] --> B["Python processing"]
-        B --> C["Rules / validation"]
-        C --> D["Generated local output"]
-        D --> E["Future API / dashboard"]
-    ```
+## Stack
 
-    See [docs/architecture.md](docs/architecture.md) for details.
+`Python` `JSONL` `Enums` `Dataclasses` `Structured output` `PyTest`
 
-    ## Stack
+## Run Locally
 
-    Current:
+```powershell
+python -m pip install -e .
+python examples/run_demo.py
+```
 
-    `Python` `JSONL` `Structured output` `Synthetic logs`
+## Run Tests
 
-    Planned evolution:
+```powershell
+python -m pip install -e ".[dev]"
+pytest
+```
 
-    - Ollama
-- LLM APIs
-- Human validation
-- LangChain
-- CrewAI
-- Agents
+## Technical Decisions
 
-    ## Run Locally
+- No LLM is added in v0.2.0 because the project first needs a baseline and evaluation.
+- The labeled dataset is synthetic and small enough to inspect manually.
+- Future LLM work should compare against the baseline using the same cases.
 
-    ```powershell
-    python examples/run_demo.py
-    ```
+## Roadmap
 
-    The demo uses only files under `data/sample/` and writes generated output
-    to ignored local folders.
+- Add more labeled synthetic logs.
+- Add confusion matrix style reporting.
+- Add Ollama/LLM comparison after the applied AI study phase.
 
-    ## Repository Workflow
+## Security and Independence
 
-    This project is intended to evolve through:
-
-    - Issues for planned work.
-    - Milestones for learning phases.
-    - Small branches and pull requests.
-    - Releases when a useful increment is ready.
-
-    Draft issues are documented in [docs/github-issues.md](docs/github-issues.md).
-
-    ## Roadmap
-
-    See [ROADMAP.md](ROADMAP.md).
-
-    ## Security and Independence
-
-    See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
+See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
