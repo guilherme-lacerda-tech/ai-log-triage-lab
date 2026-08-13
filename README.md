@@ -1,64 +1,79 @@
 # AI Log Triage Lab
 
-Independent public portfolio project for **Python**, **deterministic classification**, **structured outputs** and future **LLM comparison**.
+[![CI](https://github.com/guilherme-lacerda-tech/ai-log-triage-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/guilherme-lacerda-tech/ai-log-triage-lab/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+[![Release](https://img.shields.io/github/v/release/guilherme-lacerda-tech/ai-log-triage-lab)](https://github.com/guilherme-lacerda-tech/ai-log-triage-lab/releases)
+[![License](https://img.shields.io/github/license/guilherme-lacerda-tech/ai-log-triage-lab)](LICENSE)
 
-This repository was created from scratch with synthetic logs. It does not contain corporate code, real data, private endpoints, credentials, logs or proprietary rules.
+Synthetic log triage lab with an explainable deterministic baseline and future room for LLM comparison.
 
-## Problem
+## Why / Problem
 
-Operational logs need triage into categories, severity and suggested actions. Before adding LLMs, the project needs a measurable baseline.
+Before applying an LLM to log triage, there should be a baseline that is structured, explainable and measurable. This project builds that baseline with synthetic logs.
 
-## What It Demonstrates
+## Features
 
 - `LogEntry` input model.
 - `TriageResult` structured output.
 - `Severity`, `Category` and `SuggestedAction` enums.
-- Deterministic rule baseline.
+- Deterministic classification rules.
 - Synthetic labeled dataset.
 - Basic evaluation with labeled cases, correct cases and accuracy.
+- CI with Ruff, PyTest and coverage.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    A["Synthetic logs"] --> B["Rule baseline"]
-    B --> C["Structured triage"]
-    C --> D["Evaluation"]
-    B --> E["Future LLM comparison"]
+    Logs["Synthetic JSONL logs"] --> Baseline["Rule baseline"]
+    Baseline --> Result["Structured triage"]
+    Result --> Evaluation["Evaluation"]
+    Baseline --> Future["Future LLM comparison"]
 ```
 
-See [docs/architecture.md](docs/architecture.md) for details.
+## Tech Stack
 
-## Stack
+Current: `Python` `JSONL` `Dataclasses` `Enums` `Structured output` `PyTest` `Ruff`
 
-`Python` `JSONL` `Enums` `Dataclasses` `Structured output` `PyTest`
+Planned: larger labeled dataset, confusion-matrix style reporting and Ollama/LLM comparison after the applied AI study phase.
 
-## Run Locally
-
-```powershell
-python -m pip install -e .
-python examples/run_demo.py
-```
-
-## Run Tests
+## Quick Start
 
 ```powershell
 python -m pip install -e ".[dev]"
-pytest
+python examples/run_demo.py
 ```
 
-## Technical Decisions
+## Tests
 
-- No LLM is added in v0.2.0 because the project first needs a baseline and evaluation.
-- The labeled dataset is synthetic and small enough to inspect manually.
-- Future LLM work should compare against the baseline using the same cases.
+```powershell
+python -m pytest --cov --cov-report=term-missing
+python -m ruff check .
+```
+
+## Example Output
+
+```text
+Logs triaged: 5
+First category: operational_delay
+```
+
+## Project Structure
+
+- `src/ai_log_triage_lab/triage.py`: baseline, result types and evaluation.
+- `data/sample/synthetic_logs.jsonl`: labeled synthetic logs.
+- `tests`: category, evaluation and output tests.
+
+## Engineering Decisions
+
+- No LLM is added yet because this version is about a measurable baseline.
+- Future LLM work should compare against the same labeled cases.
+- The dataset is synthetic and intentionally inspectable.
 
 ## Roadmap
 
-- Add more labeled synthetic logs.
-- Add confusion matrix style reporting.
-- Add Ollama/LLM comparison after the applied AI study phase.
+See [ROADMAP.md](ROADMAP.md).
 
-## Security and Independence
+## Security
 
-See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
+No real logs, credentials, endpoints, hostnames, client data or employer identifiers are included.

@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 - Portfolio professionalization
+
+- Added GitHub Actions CI with Ruff, PyTest and coverage.
+- Added stronger deterministic baseline tests for categories and unlabeled evaluation.
+- Polished README badges, examples and future LLM comparison notes.
+
 ## v0.2.0 - Deterministic triage baseline
 
 - Added explicit `LogEntry`, `TriageResult`, `Severity`, `Category` and `SuggestedAction` types.
