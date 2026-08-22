@@ -98,13 +98,53 @@ def load_entries(logs_path: Path) -> list[LogEntry]:
 def evaluate(results: list[dict]) -> dict:
     labeled = [item for item in results if item.get("expected_category") and item.get("expected_severity")]
     if not labeled:
-        return {"labeled_cases": 0, "correct_cases": 0, "accuracy": None}
+        return {
+            "labeled_cases": 0,
+            "correct_cases": 0,
+            "accuracy": None,
+            "macro_f1": None,
+            "confusion_matrix": {},
+            "per_category": {},
+        }
     correct = sum(
         1
         for item in labeled
         if item["triage"]["category"] == item["expected_category"] and item["triage"]["severity"] == item["expected_severity"]
     )
-    return {"labeled_cases": len(labeled), "correct_cases": correct, "accuracy": round(correct / len(labeled), 2)}
+    categories = sorted({item["expected_category"] for item in labeled} | {item["triage"]["category"] for item in labeled})
+    confusion_matrix = {
+        expected: {predicted: 0 for predicted in categories}
+        for expected in categories
+    }
+    for item in labeled:
+        confusion_matrix[item["expected_category"]][item["triage"]["category"]] += 1
+
+    per_category = {}
+    f1_scores = []
+    for category in categories:
+        true_positive = confusion_matrix[category][category]
+        false_positive = sum(confusion_matrix[other][category] for other in categories if other != category)
+        false_negative = sum(confusion_matrix[category][other] for other in categories if other != category)
+        precision = true_positive / (true_positive + false_positive) if true_positive + false_positive else 0
+        recall = true_positive / (true_positive + false_negative) if true_positive + false_negative else 0
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0
+        f1_scores.append(f1)
+        per_category[category] = {
+            "precision": round(precision, 2),
+            "recall": round(recall, 2),
+            "f1": round(f1, 2),
+            "false_positives": false_positive,
+            "false_negatives": false_negative,
+        }
+
+    return {
+        "labeled_cases": len(labeled),
+        "correct_cases": correct,
+        "accuracy": round(correct / len(labeled), 2),
+        "macro_f1": round(sum(f1_scores) / len(f1_scores), 2),
+        "confusion_matrix": confusion_matrix,
+        "per_category": per_category,
+    }
 
 
 def run(logs_path: Path, output_path: Path) -> dict:

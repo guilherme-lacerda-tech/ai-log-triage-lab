@@ -20,7 +20,12 @@ def test_run_evaluates_labeled_dataset(tmp_path: Path) -> None:
     summary = run(root / "data" / "sample" / "synthetic_logs.jsonl", tmp_path / "triage.json")
 
     assert summary["logs"] == 5
-    assert summary["evaluation"] == {"labeled_cases": 5, "correct_cases": 5, "accuracy": 1.0}
+    assert summary["evaluation"]["labeled_cases"] == 5
+    assert summary["evaluation"]["correct_cases"] == 5
+    assert summary["evaluation"]["accuracy"] == 1.0
+    assert summary["evaluation"]["macro_f1"] == 1.0
+    assert summary["evaluation"]["confusion_matrix"]["access_or_integration"]["access_or_integration"] == 1
+    assert summary["evaluation"]["per_category"]["system_health"]["false_negatives"] == 0
     assert (tmp_path / "triage.json").exists()
 
 
@@ -45,4 +50,7 @@ def test_evaluate_without_labels_returns_empty_score() -> None:
         "labeled_cases": 0,
         "correct_cases": 0,
         "accuracy": None,
+        "macro_f1": None,
+        "confusion_matrix": {},
+        "per_category": {},
     }

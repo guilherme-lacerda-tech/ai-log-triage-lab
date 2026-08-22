@@ -18,7 +18,7 @@ Before applying an LLM to log triage, there should be a baseline that is structu
 - `Severity`, `Category` and `SuggestedAction` enums.
 - Deterministic classification rules.
 - Synthetic labeled dataset.
-- Basic evaluation with labeled cases, correct cases and accuracy.
+- Evaluation with labeled cases, accuracy, precision, recall, F1 and confusion matrix.
 - CI with Ruff, PyTest and coverage.
 
 ## Architecture
